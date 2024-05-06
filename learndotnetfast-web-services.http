@@ -1,0 +1,6 @@
+@learndotnetfast_web_services_HostAddress = http://localhost:5265
+
+GET {{learndotnetfast_web_services_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
