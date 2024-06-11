@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using learndotnetfast_web_services.Model.Enums;
+using learndotnetfast_web_services.Common.Enums;
 
 namespace learndotnetfast_web_services.Common.Validators
 {

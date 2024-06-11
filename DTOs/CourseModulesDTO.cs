@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace learndotnetfast_web_services.Model.DTOs
+namespace learndotnetfast_web_services.DTOs
 {
     public class CourseModulesDTO
     {

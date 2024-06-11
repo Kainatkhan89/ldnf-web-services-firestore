@@ -1,3 +1,10 @@
+using learndotnetfast_web_services.Common.Exceptions.Handlers;
+using learndotnetfast_web_services.Data;
+using learndotnetfast_web_services.Middleware;
+using learndotnetfast_web_services.Repositories.CourseModule;
+using learndotnetfast_web_services.Services.Courses;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +14,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register your DbContext to use an in-memory database
+//builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDB")));
+
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register other services, repositories, etc.
+builder.Services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
+builder.Services.AddScoped<ICourseModuleService, CourseModuleService>();
+
+// Register AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddControllers(options =>
+{
+    // Register the Database Exception Handler globally
+    options.Filters.Add<ApiExceptionHandler>();
+    options.Filters.Add<DatabaseExceptionHandler>();
+});
+
 var app = builder.Build();
+
+
+// Middleware to handle exceptions globally
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

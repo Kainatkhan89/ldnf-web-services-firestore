@@ -1,4 +1,4 @@
-﻿namespace learndotnetfast_web_services.Model.Enums
+﻿namespace learndotnetfast_web_services.Common.Enums
 {
     public enum Icon
     {
