@@ -9,26 +9,38 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddControllers();
+// --Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register your DbContext to use an in-memory database
+// --Register your DbContext to use an in-memory database
 //builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDB")));
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register other services, repositories, etc.
+// --Register other services, repositories, etc.
 builder.Services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
 builder.Services.AddScoped<ICourseModuleService, CourseModuleService>();
 
-// Register AutoMapper
+// --Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+// --Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddControllers(options =>
 {
-    // Register the Database Exception Handler globally
+    // --Register the Database Exception Handler globally
     options.Filters.Add<ApiExceptionHandler>();
     options.Filters.Add<DatabaseExceptionHandler>();
 });
@@ -36,10 +48,10 @@ builder.Services.AddControllers(options =>
 var app = builder.Build();
 
 
-// Middleware to handle exceptions globally
+// --Middleware to handle exceptions globally
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
+// --Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,6 +59,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin"); // Apply CORS policy
 
 app.UseAuthorization();
 
