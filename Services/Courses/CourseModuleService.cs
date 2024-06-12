@@ -47,19 +47,19 @@ namespace learndotnetfast_web_services.Services.Courses
             _courseModuleRepository.DeleteById(id);
         }
 
-        public CourseModulesDTO GetAllCourseModules()
+        public LearningPathDTO GetAllCourseModules()
         {
             var courseModules = _courseModuleRepository.FindAll();
-            return new CourseModulesDTO
+            return new LearningPathDTO
             {
                 Modules = _mapper.Map<List<CourseModuleDTO>>(courseModules)
             };
         }
 
-        public CourseModulesDTO GetAllCourseModulesAndTheirTutorials()
+        public LearningPathDTO GetAllCourseModulesAndTheirTutorials()
         {
             var courseModules = _courseModuleRepository.FindAllAndTheirTutorials();
-            return new CourseModulesDTO
+            return new LearningPathDTO
             {
                 Modules = _mapper.Map<List<CourseModuleDTO>>(courseModules)
             };

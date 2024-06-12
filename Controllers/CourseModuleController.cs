@@ -8,7 +8,7 @@ using learndotnetfast_web_services.DTOs;
 namespace learndotnetfast_web_services.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/course-modules")]
     public class CourseModuleController : ControllerBase
     {
         private readonly ICourseModuleService _courseModuleService;
@@ -26,14 +26,14 @@ namespace learndotnetfast_web_services.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CourseModulesDTO>> GetAllCourseModules()
+        public async Task<ActionResult<LearningPathDTO>> GetAllCourseModules()
         {
             var courseModules = _courseModuleService.GetAllCourseModules(); 
             return Ok(courseModules);
         }
 
         [HttpGet("with-tutorials")]
-        public ActionResult<CourseModulesDTO> GetAllCourseModulesAndTheirTutorials()
+        public ActionResult<LearningPathDTO> GetAllCourseModulesAndTheirTutorials()
         {
             var courseModules = _courseModuleService.GetAllCourseModulesAndTheirTutorials();
             return Ok(courseModules);
