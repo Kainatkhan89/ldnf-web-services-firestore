@@ -2,7 +2,9 @@ using learndotnetfast_web_services.Common.Exceptions.Handlers;
 using learndotnetfast_web_services.Data;
 using learndotnetfast_web_services.Middleware;
 using learndotnetfast_web_services.Repositories.CourseModule;
+using learndotnetfast_web_services.Repositories.Tutorial;
 using learndotnetfast_web_services.Services.Courses;
+using learndotnetfast_web_services.Services.Tutorials;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 // --Register other services, repositories, etc.
 builder.Services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
 builder.Services.AddScoped<ICourseModuleService, CourseModuleService>();
+builder.Services.AddScoped<ITutorialRepository, TutorialRepository>();
+builder.Services.AddScoped<ITutorialService, TutorialService>();
 
 // --Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
