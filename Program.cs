@@ -2,8 +2,10 @@ using learndotnetfast_web_services.Common.Exceptions.Handlers;
 using learndotnetfast_web_services.Data;
 using learndotnetfast_web_services.Middleware;
 using learndotnetfast_web_services.Repositories.CourseModule;
+using learndotnetfast_web_services.Repositories.Progress;
 using learndotnetfast_web_services.Repositories.Tutorial;
 using learndotnetfast_web_services.Services.Courses;
+using learndotnetfast_web_services.Services.Progress;
 using learndotnetfast_web_services.Services.Tutorials;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +28,8 @@ builder.Services.AddScoped<ICourseModuleRepository, CourseModuleRepository>();
 builder.Services.AddScoped<ICourseModuleService, CourseModuleService>();
 builder.Services.AddScoped<ITutorialRepository, TutorialRepository>();
 builder.Services.AddScoped<ITutorialService, TutorialService>();
+builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
+builder.Services.AddScoped<IProgressService, ProgressService>();
 
 // --Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

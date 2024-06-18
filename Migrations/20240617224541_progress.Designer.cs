@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using learndotnetfast_web_services.Data;
 
@@ -11,9 +12,11 @@ using learndotnetfast_web_services.Data;
 namespace learndotnetfast_web_services.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240617224541_progress")]
+    partial class progress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,7 @@ namespace learndotnetfast_web_services.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("progress");
+                    b.ToTable("Progresses");
                 });
 
             modelBuilder.Entity("learndotnetfast_web_services.Entities.Tutorial", b =>
