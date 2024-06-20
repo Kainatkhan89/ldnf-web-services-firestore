@@ -37,6 +37,7 @@ namespace learndotnetfast_web_services.Controllers
             {
                 var updatedProgress = await _progressService.AddCompletedTutorialAsync(completionDTO);
                 return CreatedAtAction(nameof(GetProgress), new { userId = completionDTO.UserId }, updatedProgress);
+                //return Ok(updatedProgress);
             }
             catch (Exception ex)
             {

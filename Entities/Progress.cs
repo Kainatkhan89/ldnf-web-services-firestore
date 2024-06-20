@@ -13,9 +13,15 @@ namespace learndotnetfast_web_services.Entities
         [Required]
         public string UserId { get; set; }
 
-        // Many-to-Many relationship with Tutorials
+        /*// Many-to-Many relationship with Tutorials
         [Required]
-        public virtual List<Tutorial> CompletedTutorials { get; set; }
+        public virtual List<Tutorial> CompletedTutorials { get; set; }*/
+
+        // Foreign key to Tutorial
+        [Required]
+        public int TutorialId { get; set; }
+        // Navigation property to Tutorial
+       // public virtual Tutorial Tutorial { get; set; }
     }
 
 }

@@ -12,12 +12,20 @@
             _context = context;
         }
 
-        public async Task<Progress> GetProgressByUserIdAsync(string userId)
+        /*   public async Task<Progress> GetProgressByUserIdAsync(string userId)
+           {
+               return await _context.Progresses
+                                    .Include(p => p.TutorialId)
+                                    .FirstOrDefaultAsync(p => p.UserId == userId);
+           }*/
+
+        public async Task<List<Progress>> GetProgressesByUserIdAsync(string userId)
         {
             return await _context.Progresses
-                                 .Include(p => p.CompletedTutorials)
-                                 .FirstOrDefaultAsync(p => p.UserId == userId);
+                                 .Where(p => p.UserId == userId)
+                                 .ToListAsync();
         }
+
 
         public async Task AddProgressAsync(Progress progress)
         {
