@@ -68,28 +68,100 @@ namespace learndotnetfast_web_services.Services.Progress
                return _mapper.Map<ProgressDTO>(progress);
            }*/
 
-        public async Task<ProgressDTO> AddCompletedTutorialAsync(TutorialCompletionDTO completionDTO)
+        /* public async Task<TutorialCompletionDTO> AddCompletedTutorialAsync(TutorialCompletionDTO completionDTO)
+         {
+             // Check if the tutorial exists to prevent adding invalid tutorial IDs
+             var tutorialExists = await _context.Tutorials.AnyAsync(t => t.Id == completionDTO.TutorialId);
+             if (!tutorialExists)
+             {
+                 throw new KeyNotFoundException($"No tutorial found with ID {completionDTO.TutorialId}.");
+             }
+
+             // Create a new progress record for each tutorial completion
+             var newProgress = new Entities.Progress
+             {
+                 UserId = completionDTO.UserId,
+                 TutorialId = completionDTO.TutorialId
+             };
+
+             _context.Progresses.Add(newProgress);
+             await _context.SaveChangesAsync();
+
+             // Return the newly created progress mapped to a DTO
+             return _mapper.Map<TutorialCompletionDTO>(newProgress);
+         }
+ */
+        public async Task<TutorialCompletionDTO> AddCompletedTutorialAsync(TutorialCompletionDTO completionDTO)
         {
-            // Check if the tutorial exists to prevent adding invalid tutorial IDs
-            var tutorialExists = await _context.Tutorials.AnyAsync(t => t.Id == completionDTO.TutorialId);
-            if (!tutorialExists)
+            try
             {
-                throw new KeyNotFoundException($"No tutorial found with ID {completionDTO.TutorialId}.");
+                // Ensure the tutorial exists
+                var tutorialExists = await _context.Tutorials.AnyAsync(t => t.Id == completionDTO.TutorialId);
+                if (!tutorialExists)
+                {
+                    throw new KeyNotFoundException($"No tutorial found with ID {completionDTO.TutorialId}.");
+                }
+
+                // Create a new progress record
+                var newProgress = new Entities.Progress
+                {
+                    UserId = completionDTO.UserId,
+                    TutorialId = completionDTO.TutorialId
+                };
+
+                _context.Progresses.Add(newProgress);
+                await _context.SaveChangesAsync();
+
+                // Return the DTO directly, since it already represents the completed tutorial
+                return new TutorialCompletionDTO
+                {
+                    Id = newProgress.Id,  // Optionally return the database-generated ID
+                    UserId = completionDTO.UserId,
+                    TutorialId = completionDTO.TutorialId
+                };
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and rethrow a user-friendly message
+                // You should use a proper logging mechanism
+                throw new ApplicationException($"An error occurred when adding tutorial completion: {ex.Message}", ex);
+            }
+        }
+
+        public async Task RemoveCompletedTutorialAsync(TutorialCompletionDTO completionDTO)
+        {
+            // Find the progress record to delete
+            var progress = await _context.Progresses
+                                         .FirstOrDefaultAsync(p => p.UserId == completionDTO.UserId && p.TutorialId == completionDTO.TutorialId);
+
+            if (progress == null)
+            {
+                throw new KeyNotFoundException($"No completion record found for user {completionDTO.UserId} with tutorial ID {completionDTO.TutorialId}.");
             }
 
-            // Create a new progress record for each tutorial completion
-            var newProgress = new Entities.Progress
-            {
-                UserId = completionDTO.UserId,
-                TutorialId = completionDTO.TutorialId
-            };
-
-            _context.Progresses.Add(newProgress);
+            // Remove the progress record
+            _context.Progresses.Remove(progress);
             await _context.SaveChangesAsync();
-
-            // Return the newly created progress mapped to a DTO
-            return _mapper.Map<ProgressDTO>(newProgress);
         }
+
+        public async Task RemoveAllProgressForUserAsync(string userId)
+        {
+            // Retrieve all progress records for the given user
+            var progresses = await _context.Progresses
+                                           .Where(p => p.UserId == userId)
+                                           .ToListAsync();
+
+            if (progresses.Count == 0)
+            {
+                throw new KeyNotFoundException($"No progress records found for user {userId}.");
+            }
+
+            // Remove all fetched progress records
+            _context.Progresses.RemoveRange(progresses);
+            await _context.SaveChangesAsync();
+        }
+
+
 
     }
 

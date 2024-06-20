@@ -26,7 +26,7 @@ namespace learndotnetfast_web_services.Controllers
         }
 
         [HttpPost("complete-tutorial")]
-        public async Task<ActionResult<ProgressDTO>> CompleteTutorial([FromBody] TutorialCompletionDTO completionDTO)
+        public async Task<ActionResult<TutorialCompletionDTO>> CompleteTutorial([FromBody] TutorialCompletionDTO completionDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -45,6 +45,46 @@ namespace learndotnetfast_web_services.Controllers
                 return StatusCode(500, "An error occurred while completing the tutorial.");
             }
         }
+
+        [HttpDelete("remove-completion")]
+        public async Task<ActionResult> DeleteCompletedTutorial([FromBody] TutorialCompletionDTO completionDTO)
+        {
+            try
+            {
+                await _progressService.RemoveCompletedTutorialAsync(completionDTO);
+                return NoContent();  // HTTP 204 as response for successful delete with no content to return
+            }
+            catch (KeyNotFoundException knfe)
+            {
+                return NotFound(knfe.Message);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("remove-all/{userId}")]
+        public async Task<ActionResult> DeleteAllProgressForUser(string userId)
+        {
+            try
+            {
+                await _progressService.RemoveAllProgressForUserAsync(userId);
+                return NoContent(); // HTTP 204 as response for successful delete with no content to return
+            }
+            catch (KeyNotFoundException knfe)
+            {
+                return NotFound(knfe.Message);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details here
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 
 }
