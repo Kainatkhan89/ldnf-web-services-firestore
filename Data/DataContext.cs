@@ -10,6 +10,8 @@ namespace learndotnetfast_web_services.Data
         }
         public DbSet<CourseModule> CourseModules { get; set; }
         public DbSet<Tutorial> Tutorials { get; set; }
+        public DbSet<Progress> Progresses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -10,6 +10,8 @@
         {
             CreateMap<CourseModule, CourseModuleDTO>().ReverseMap();
             CreateMap<Tutorial, TutorialDTO>().ReverseMap();
+            CreateMap<Progress, ProgressDTO>().ReverseMap();
+            CreateMap<Progress, TutorialCompletionDTO>().ReverseMap();
         }
     }
 
