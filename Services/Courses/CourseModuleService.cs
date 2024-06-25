@@ -21,6 +21,12 @@ namespace learndotnetfast_web_services.Services.Courses
             _mapper = mapper;
         }
 
+        public CourseModuleDTO GetCourseModuleById(int id)
+        {
+            var courseModule = _courseModuleRepository.FindById(id) ?? throw new ResourceNotFoundException($"Course module not found with id {id}");
+            return _mapper.Map<CourseModuleDTO>(courseModule);
+        }
+
         public CourseModuleDTO SaveCourseModule(CourseModuleDTO courseModuleDTO)
         {
             CheckForDuplicateCourseModule(courseModuleDTO);
@@ -29,12 +35,6 @@ namespace learndotnetfast_web_services.Services.Courses
             var savedCourseModule = _courseModuleRepository.Save(courseModuleToSave);
 
             return _mapper.Map<CourseModuleDTO>(savedCourseModule);
-        }
-
-        public CourseModuleDTO GetCourseModuleById(int id)
-        {
-            var courseModule = _courseModuleRepository.FindById(id) ?? throw new ResourceNotFoundException($"Course module not found with id {id}");
-            return _mapper.Map<CourseModuleDTO>(courseModule);
         }
 
         public void DeleteCourseModuleById(int id)

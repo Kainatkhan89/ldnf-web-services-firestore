@@ -25,6 +25,30 @@ namespace learndotnetfast_web_services.DTOs
         public string Color { get; set; }
 
         public List<TutorialDTO> Tutorials { get; set; }
+
+       /* public override bool Equals(object obj)
+        {
+            if (obj is CourseModuleDTO other)
+            {
+                return Id == other.Id &&
+                       Title == other.Title &&
+                       Tutorials.SequenceEqual(other.Tutorials);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = Id.GetHashCode() ^ Title.GetHashCode();
+            if (Tutorials != null)
+            {
+                foreach (var tutorial in Tutorials)
+                {
+                    hashCode ^= tutorial.GetHashCode();
+                }
+            }
+            return hashCode;
+        }*/
     }
 
 }
