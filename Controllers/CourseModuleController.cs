@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using learndotnetfast_web_services.Services.Courses;
 using learndotnetfast_web_services.Data;
-using Microsoft.EntityFrameworkCore;
 using learndotnetfast_web_services.DTOs;
 
 namespace learndotnetfast_web_services.Controllers
@@ -14,11 +13,6 @@ namespace learndotnetfast_web_services.Controllers
         private readonly ICourseModuleService _courseModuleService;
         private readonly DataContext _dataContext;
 
-        // Constructor with dependency injection
-       /* public CourseModuleController(ICourseModuleService courseModuleService)
-        {
-            _courseModuleService = courseModuleService;
-        }*/
         public CourseModuleController(DataContext _context, ICourseModuleService courseModuleService)
         {
             _courseModuleService = courseModuleService;

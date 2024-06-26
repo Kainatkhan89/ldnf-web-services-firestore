@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using learndotnetfast_web_services.DTOs;
+﻿using learndotnetfast_web_services.DTOs;
 
 namespace learndotnetfast_web_services.Services.Tutorials
 {  
