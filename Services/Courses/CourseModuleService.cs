@@ -1,14 +1,12 @@
-﻿
+﻿using AutoMapper;
+using System.Collections.Generic;
+using learndotnetfast_web_services.Common.Exceptions.Custom;
+using learndotnetfast_web_services.Entities;
+using learndotnetfast_web_services.Repositories.CourseModule;
+using learndotnetfast_web_services.DTOs;
 
 namespace learndotnetfast_web_services.Services.Courses
 {
-    using AutoMapper;
-    using System.Collections.Generic;
-    using learndotnetfast_web_services.Common.Exceptions.Custom;
-    using learndotnetfast_web_services.Entities;
-    using learndotnetfast_web_services.Repositories.CourseModule;
-    using learndotnetfast_web_services.DTOs;
-
     public class CourseModuleService : ICourseModuleService
     {
         private readonly ICourseModuleRepository _courseModuleRepository;

@@ -1,12 +1,12 @@
-﻿namespace learndotnetfast_web_services.Services.Tutorials
-{
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using learndotnetfast_web_services.DTOs;
-    using learndotnetfast_web_services.Entities;
-    using learndotnetfast_web_services.Repositories.Tutorial;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using learndotnetfast_web_services.DTOs;
+using learndotnetfast_web_services.Entities;
+using learndotnetfast_web_services.Repositories.Tutorial;
 
+namespace learndotnetfast_web_services.Services.Tutorials
+{
     public class TutorialService : ITutorialService
     {
         private readonly ITutorialRepository _tutorialRepository;
